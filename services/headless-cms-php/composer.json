@@ -1,0 +1,13 @@
+{
+    "name": "clothyyy/headless-cms-php",
+    "description": "CLOTHYYY Modern PHP 8.3 Headless Content Management Engine",
+    "type": "project",
+    "require": {
+        "php": ">=8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Clothyyy\\Cms\\": "src/"
+        }
+    }
+}
