@@ -1,0 +1,120 @@
+version: '3.8'
+
+services:
+  # 1. SQL (PostgreSQL 16 Enterprise)
+  database-sql:
+    image: postgres:16-alpine
+    container_name: clothyyy-sql-db
+    environment:
+      POSTGRES_USER: clothyyy_admin
+      POSTGRES_PASSWORD: enterprise_secure_pwd_2026
+      POSTGRES_DB: clothyyy_production
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - clothyyy-mesh
+
+  # 2. TypeScript (BFF API Gateway)
+  bff-gateway-ts:
+    build: ./services/bff-gateway-ts
+    container_name: clothyyy-gateway-ts
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: 8080
+      NODE_ENV: production
+    depends_on:
+      - database-sql
+    networks:
+      - clothyyy-mesh
+
+  # 3. JavaScript (Telemetry & Real-Time Streamer)
+  realtime-stream-js:
+    build: ./services/realtime-stream-js
+    container_name: clothyyy-stream-js
+    ports:
+      - "8089:8089"
+    networks:
+      - clothyyy-mesh
+
+  # 4. Go (Ultra-Low-Latency Currency & Rate Limiter Gateway)
+  rate-gateway-go:
+    build: ./services/rate-gateway-go
+    container_name: clothyyy-rate-go
+    ports:
+      - "8081:8081"
+    networks:
+      - clothyyy-mesh
+
+  # 5. Python (Neural AI Stylist & Vision Engine)
+  ai-engine-python:
+    build: ./services/ai-engine-python
+    container_name: clothyyy-ai-python
+    ports:
+      - "8082:8082"
+    networks:
+      - clothyyy-mesh
+
+  # 6. Rust (Cryptographic Vault & Order Integrity)
+  crypto-vault-rust:
+    build: ./services/crypto-vault-rust
+    container_name: clothyyy-vault-rust
+    ports:
+      - "8083:8083"
+    networks:
+      - clothyyy-mesh
+
+  # 7. C# (.NET 9 Financial Ledger & Tax Engine)
+  financial-ledger-csharp:
+    build: ./services/financial-ledger-csharp
+    container_name: clothyyy-ledger-csharp
+    ports:
+      - "8084:8084"
+    networks:
+      - clothyyy-mesh
+
+  # 8. Java (Spring Boot 3 Global Inventory Core)
+  inventory-core-java:
+    build: ./services/inventory-core-java
+    container_name: clothyyy-inventory-java
+    ports:
+      - "8085:8085"
+    networks:
+      - clothyyy-mesh
+
+  # 9. Kotlin (Ktor VIP Concierge & Private Salon Hub)
+  vip-concierge-kotlin:
+    build: ./services/vip-concierge-kotlin
+    container_name: clothyyy-vip-kotlin
+    ports:
+      - "8086:8086"
+    networks:
+      - clothyyy-mesh
+
+  # 10. PHP (PHP 8.3 Headless CMS)
+  headless-cms-php:
+    build: ./services/headless-cms-php
+    container_name: clothyyy-cms-php
+    ports:
+      - "8087:8087"
+    networks:
+      - clothyyy-mesh
+
+  # 11. Ruby (Sinatra Royal Loyalty & Privileges)
+  loyalty-engine-ruby:
+    build: ./services/loyalty-engine-ruby
+    container_name: clothyyy-loyalty-ruby
+    ports:
+      - "8088:8088"
+    networks:
+      - clothyyy-mesh
+
+networks:
+  clothyyy-mesh:
+    driver: bridge
+
+volumes:
+  pgdata:
