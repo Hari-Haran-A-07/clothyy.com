@@ -1,0 +1,10 @@
+{
+  "name": "clothyyy-realtime-stream-js",
+  "version": "1.0.0",
+  "description": "CLOTHYYY Real-Time Telemetry & Boutique Event Streamer (JavaScript / Node.js)",
+  "main": "analytics-streamer.js",
+  "type": "module",
+  "dependencies": {
+    "ws": "^8.16.0"
+  }
+}
