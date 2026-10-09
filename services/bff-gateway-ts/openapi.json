@@ -1,0 +1,72 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "CLOTHYYY.COM Enterprise Polyglot API Gateway",
+    "version": "1.0.0",
+    "description": "Unified API gateway specification unifying 11 polyglot microservices across TypeScript, Go, Python, Rust, C#, Java, Kotlin, PHP, Ruby, JavaScript, and PostgreSQL."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Local Development BFF Gateway"
+    }
+  ],
+  "paths": {
+    "/api/v1/polyglot/fleet": {
+      "get": {
+        "summary": "Retrieve real-time health and telemetry for all 11 microservices",
+        "responses": {
+          "200": {
+            "description": "Fleet status matrix",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "fleet_size": { "type": "integer" },
+                    "global_health": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/convert": {
+      "get": {
+        "summary": "Sub-microsecond KWD currency conversion (proxied to Go Gateway :8081)",
+        "parameters": [
+          { "name": "amount_kwd", "in": "query", "required": true, "schema": { "type": "number" } },
+          { "name": "currency", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Converted price and exchange rate" }
+        }
+      }
+    },
+    "/api/v1/stylist/curate": {
+      "post": {
+        "summary": "Neural haute couture aesthetic curation (proxied to Python AI :8082)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "occasion": { "type": "string" },
+                  "base_color": { "type": "string" },
+                  "budget_kwd": { "type": "number" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Curated garment ensemble and confidence score" }
+        }
+      }
+    }
+  }
+}
