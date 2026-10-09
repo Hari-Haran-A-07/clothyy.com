@@ -1,0 +1,17 @@
+name: CLOTHYYY Multi-Service Docker Build & Deploy
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  docker-compose-validate:
+    name: Validate Docker Compose Fleet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Compose File
+        run: docker compose config --quiet
+      - name: Build All 11 Services
+        run: docker compose build --parallel

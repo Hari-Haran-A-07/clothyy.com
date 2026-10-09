@@ -1,0 +1,65 @@
+name: CLOTHYYY Polyglot CI Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  frontend-build:
+    name: Frontend (React 19 / TypeScript / Vite)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Typecheck & Build
+        run: npm run build
+
+  go-gateway-test:
+    name: Go 1.22 Rate & FX Gateway
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+      - name: Run Tests
+        working-directory: ./services/rate-gateway-go
+        run: go test -v -race ./...
+
+  python-ai-test:
+    name: Python 3.12 AI Engine
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        working-directory: ./services/ai-engine-python
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt pytest
+      - name: Run PyTest
+        working-directory: ./services/ai-engine-python
+        run: pytest -v
+
+  rust-vault-test:
+    name: Rust Cryptographic Vault
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+      - name: Run Cargo Test
+        working-directory: ./services/crypto-vault-rust
+        run: cargo test --verbose
