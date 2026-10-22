@@ -32,3 +32,31 @@ class DynamicPricingEngine:
             "artisan_premium_delta_kwd": surge_premium,
             "status": "EXCLUSIVE_DROP_VALUATION"
         }
+
+    def evaluate_archive_adjustment(self, base_price_kwd: float, seasons_in_vault: int, is_collector_piece: bool) -> Dict[str, Any]:
+        """
+        Calculates valuation for archival and vintage runway garments.
+        Collector pieces appreciate with age; seasonal ready-to-wear maintains baseline luxury floor.
+        """
+        if is_collector_piece:
+            # Archival couture pieces appreciate by 6% per season preserved
+            appreciation_factor = 1.0 + (0.06 * min(seasons_in_vault, 10))
+            adjusted_price = round(base_price_kwd * appreciation_factor, 3)
+            return {
+                "base_price_kwd": base_price_kwd,
+                "appreciation_factor": round(appreciation_factor, 3),
+                "seasons_in_vault": seasons_in_vault,
+                "adjusted_price_kwd": adjusted_price,
+                "classification": "ARCHIVAL_APPRECIATION"
+            }
+        else:
+            # Archive floor protects brand prestige (max discount 15%)
+            floor_discount = min(0.05 * seasons_in_vault, 0.15)
+            adjusted_price = round(base_price_kwd * (1.0 - floor_discount), 3)
+            return {
+                "base_price_kwd": base_price_kwd,
+                "discount_factor": round(floor_discount, 3),
+                "seasons_in_vault": seasons_in_vault,
+                "adjusted_price_kwd": adjusted_price,
+                "classification": "PRESTIGE_FLOOR_MAINTAINED"
+            }
