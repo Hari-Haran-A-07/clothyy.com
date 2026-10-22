@@ -50,3 +50,27 @@ def test_dynamic_pricing_scarcity():
     assert res["scarcity_index"] > 1.10
     assert res["recommended_valuation_kwd"] > 1100.0
     assert res["artisan_premium_delta_kwd"] > 0.0
+
+def test_archive_collector_appreciation():
+    engine = DynamicPricingEngine()
+    res = engine.evaluate_archive_adjustment(
+        base_price_kwd=2000.0,
+        seasons_in_vault=3,
+        is_collector_piece=True
+    )
+    assert res["appreciation_factor"] == 1.18
+    assert res["adjusted_price_kwd"] == 2360.0
+    assert res["classification"] == "ARCHIVAL_APPRECIATION"
+
+def test_archive_prestige_floor():
+    engine = DynamicPricingEngine()
+    res = engine.evaluate_archive_adjustment(
+        base_price_kwd=1000.0,
+        seasons_in_vault=5,
+        is_collector_piece=False
+    )
+    # Floor discount capped at 15%
+    assert res["discount_factor"] == 0.15
+    assert res["adjusted_price_kwd"] == 850.0
+    assert res["classification"] == "PRESTIGE_FLOOR_MAINTAINED"
+
