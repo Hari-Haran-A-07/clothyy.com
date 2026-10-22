@@ -1,0 +1,14 @@
+# Robots.txt for CLOTHYYY.COM Luxury Fashion
+User-agent: *
+Allow: /
+Allow: /collection/
+Allow: /editorial/
+Allow: /about
+
+# Disallow internal admin & checkout endpoints
+Disallow: /admin/
+Disallow: /api/
+Disallow: /checkout/session/
+Disallow: /vip/private-salon/booking-token/
+
+Sitemap: https://clothyy.com/sitemap.xml
