@@ -1,0 +1,38 @@
+name: Feature Request
+description: Suggest an idea or enhancement for CLOTHYYY.COM
+title: "[FEAT]: "
+labels: ["enhancement"]
+body:
+  - type: dropdown
+    id: service
+    attributes:
+      label: Target Microservice / Architecture Layer
+      options:
+        - "Frontend (React / Vite)"
+        - "TypeScript BFF Gateway (services/bff-gateway-ts)"
+        - "Python AI Engine (services/ai-engine-python)"
+        - "Go Rate Gateway (services/rate-gateway-go)"
+        - "Rust Crypto Vault (services/crypto-vault-rust)"
+        - "C# Financial Ledger (services/financial-ledger-csharp)"
+        - "Java Inventory Core (services/inventory-core-java)"
+        - "Ruby Loyalty Engine (services/loyalty-engine-ruby)"
+        - "PHP Headless CMS (services/headless-cms-php)"
+        - "Kotlin VIP Concierge (services/vip-concierge-kotlin)"
+        - "JS Realtime Stream (services/realtime-stream-js)"
+        - "Platform & Infrastructure"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: Is your feature request related to a problem? Please describe.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: A clear and concise description of what you want to happen.
+    validations:
+      required: true

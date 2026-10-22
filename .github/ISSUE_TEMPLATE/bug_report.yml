@@ -1,0 +1,53 @@
+name: Bug Report
+description: File a bug report for CLOTHYYY.COM polyglot services
+title: "[BUG]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing an issue! Please provide the details below so we can reproduce and resolve it.
+  - type: dropdown
+    id: service
+    attributes:
+      label: Affected Microservice / Component
+      options:
+        - "Frontend (React / Vite)"
+        - "TypeScript BFF Gateway (services/bff-gateway-ts)"
+        - "Python AI Engine (services/ai-engine-python)"
+        - "Go Rate Gateway (services/rate-gateway-go)"
+        - "Rust Crypto Vault (services/crypto-vault-rust)"
+        - "C# Financial Ledger (services/financial-ledger-csharp)"
+        - "Java Inventory Core (services/inventory-core-java)"
+        - "Ruby Loyalty Engine (services/loyalty-engine-ruby)"
+        - "PHP Headless CMS (services/headless-cms-php)"
+        - "Kotlin VIP Concierge (services/vip-concierge-kotlin)"
+        - "JS Realtime Stream (services/realtime-stream-js)"
+        - "Database / Infrastructure"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Query endpoint '...'
+        2. With payload '...'
+        3. See error response
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen.
+    validations:
+      required: true
