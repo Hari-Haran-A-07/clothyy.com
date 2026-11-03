@@ -1,0 +1,35 @@
+version: '3.8'
+
+# Staging Environment Overrides for Clothyyy Microservices
+services:
+  bff-gateway:
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+    restart: always
+
+  rate-gateway:
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    restart: always
+
+  ai-engine:
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1024M
+    restart: always
+
+  realtime-stream:
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+    restart: always
