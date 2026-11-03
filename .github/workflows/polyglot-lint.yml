@@ -1,0 +1,35 @@
+name: Polyglot Lint & Static Analysis
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-services:
+    name: Lint Multi-Language Codebases
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Lint Go Services
+        run: |
+          cd services/rate-gateway-go
+          go vet ./...
+
+      - name: Lint Python AI Engine
+        run: |
+          cd services/ai-engine-python
+          python -m py_compile *.py
