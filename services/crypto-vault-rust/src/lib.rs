@@ -1,4 +1,5 @@
 pub mod hasher;
+pub mod zkp_certificate;
 
 /// Fast WebAssembly-compatible image buffer dimension optimizer & perceptual hash
 pub fn calculate_image_perceptual_hash(width: u32, height: u32, aspect_ratio: f32) -> String {
