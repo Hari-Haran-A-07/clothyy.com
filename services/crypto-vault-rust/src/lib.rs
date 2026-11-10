@@ -1,4 +1,5 @@
 pub mod hasher;
+pub mod merkle_proof;
 pub mod zkp_certificate;
 
 /// Fast WebAssembly-compatible image buffer dimension optimizer & perceptual hash
